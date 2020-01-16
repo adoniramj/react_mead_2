@@ -1,0 +1,12 @@
+{
+  "name": "react_mead_training",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:adoniramj/react_mead_2.git",
+  "author": "adoniramj <adoniramjvargas@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "babel-preset-env": "1.5.2",
+    "babel-preset-react": "6.24.1"
+  }
+}
