@@ -20,25 +20,29 @@ var template = (
   </div>)
   // var template = React.createElement("p", null, "This is JSX from app.js");
 
-  function getLocation (location) {
-    if (location) {
-      return <p>Location: {location}</p>
-    }
-  }
-  var user = {
-    age: 17,
-    location: 'Miami'
-}
-var userName = 'Mike'
-var userAge = 50
+let count = 0
 
-var template2 = (
+const addOne = () => {
+  console.log('Add one')
+}
+
+const minusOne = () => {
+  console.log('Minus one')
+}
+
+const equalsZero = () => {
+  console.log('Reset to zero')
+}
+const template2 = (
   <div>
-    <p>Name: {user.name ? user.name : 'anonymous'}</p>
-    {user.age >= 18 && <p>Age: {user.age}</p>}
-    {getLocation(user.location)}
+    <h1>Count: {count}</h1>
+    <button onClick={addOne}>Add one</button>
+    <button onClick={minusOne}>Minus one</button>
+    <button onClick={equalsZero}>Reset</button>
   </div>
 )
+
+console.log(template2)
 var appRoot = document.getElementById('app')
 
-ReactDOM.render(template, appRoot)
+ReactDOM.render(template2, appRoot)
