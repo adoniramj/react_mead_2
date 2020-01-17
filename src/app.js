@@ -4,55 +4,50 @@ console.log('app.js is running')
 var app = {
   title: 'Indecision  App',
   subtitle: 'I am a sub-title',
-  options: ['Option one', 'Option two']
+  options: []
 }
 
-var template = (
-  <div>
-  <h1>{app.title}</h1>
-  {app.subtitle && <p>{app.subtitle}</p>}
-  <p>{app.options.length > 0 ? 'Here are your options' : 'You do not have any options'}</p>
+const handleSubmit = (e) => {
+  e.preventDefault()
+  const option = e.target.elements.option.value
 
-  <ol>
-  <li>Item 1</li>
-  <li>Item 2</li>
-  </ol>
-  </div>)
-  // var template = React.createElement("p", null, "This is JSX from app.js");
+  if (option) {
+    console.log('This option is not empty')
+    app.options.push(option)
+    e.target.elements.option.value = ''
+    reRendeFunc()
+  }
 
-let count = 0
-
-const addOne = () => {
-  count++
-  console.log(count)
-  renderFunc()
 }
 
-const minusOne = () => {
-  console.log('Minus one')
-  count--
-  renderFunc()
+const clearArray = () => {
+  app.options = []
+  reRendeFunc()
 }
-
-const equalsZero = () => {
-  console.log('Reset to zero')
-  count = 0
-  renderFunc()
-}
-
 var appRoot = document.getElementById('app')
 
-const renderFunc = () => { 
-  const template2 = (
-    <div>
-      <h1>Count: {count}</h1>
-      <button onClick={addOne}>Add one</button>
-      <button onClick={minusOne}>Minus one</button>
-      <button onClick={equalsZero}>Reset</button>
-    </div>
-  )
 
-  ReactDOM.render(template2, appRoot)
+const reRendeFunc = () => {
+  var template = (
+    <div>
+      <h1>{app.title}</h1>
+      {app.subtitle && <p>{app.subtitle}</p>}
+      <p>{app.options.length > 0 ? 'Here are your options' : 'You do not have any options'}</p>
+      {
+        app.options.length > 0 && <p>{app.options.length}</p>
+      }
+      <button onClick={clearArray}>Clear options</button>
+      <ol>
+        <li>Item 1</li>
+        <li>Item 2</li>
+      </ol>
+      <form onSubmit={handleSubmit}>
+        <input type='text' name='option' autoComplete='off' />
+        <button>Submit</button>
+      </form>
+    </div>)
+  
+    ReactDOM.render(template, appRoot)
 }
 
-renderFunc()
+reRendeFunc()

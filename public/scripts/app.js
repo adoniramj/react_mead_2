@@ -6,94 +6,83 @@ console.log('app.js is running');
 var app = {
   title: 'Indecision  App',
   subtitle: 'I am a sub-title',
-  options: ['Option one', 'Option two']
+  options: []
 };
 
-var template = React.createElement(
-  'div',
-  null,
-  React.createElement(
-    'h1',
-    null,
-    app.title
-  ),
-  app.subtitle && React.createElement(
-    'p',
-    null,
-    app.subtitle
-  ),
-  React.createElement(
-    'p',
-    null,
-    app.options.length > 0 ? 'Here are your options' : 'You do not have any options'
-  ),
-  React.createElement(
-    'ol',
-    null,
-    React.createElement(
-      'li',
-      null,
-      'Item 1'
-    ),
-    React.createElement(
-      'li',
-      null,
-      'Item 2'
-    )
-  )
-);
-// var template = React.createElement("p", null, "This is JSX from app.js");
+var handleSubmit = function handleSubmit(e) {
+  e.preventDefault();
+  var option = e.target.elements.option.value;
 
-var count = 0;
-
-var addOne = function addOne() {
-  count++;
-  console.log(count);
-  renderFunc();
+  if (option) {
+    console.log('This option is not empty');
+    app.options.push(option);
+    e.target.elements.option.value = '';
+    reRendeFunc();
+  }
 };
 
-var minusOne = function minusOne() {
-  console.log('Minus one');
-  count--;
-  renderFunc();
+var clearArray = function clearArray() {
+  app.options = [];
+  reRendeFunc();
 };
-
-var equalsZero = function equalsZero() {
-  console.log('Reset to zero');
-  count = 0;
-  renderFunc();
-};
-
 var appRoot = document.getElementById('app');
 
-var renderFunc = function renderFunc() {
-  var template2 = React.createElement(
+var reRendeFunc = function reRendeFunc() {
+  var template = React.createElement(
     'div',
     null,
     React.createElement(
       'h1',
       null,
-      'Count: ',
-      count
+      app.title
+    ),
+    app.subtitle && React.createElement(
+      'p',
+      null,
+      app.subtitle
+    ),
+    React.createElement(
+      'p',
+      null,
+      app.options.length > 0 ? 'Here are your options' : 'You do not have any options'
+    ),
+    app.options.length > 0 && React.createElement(
+      'p',
+      null,
+      app.options.length
     ),
     React.createElement(
       'button',
-      { onClick: addOne },
-      'Add one'
+      { onClick: clearArray },
+      'Clear options'
     ),
     React.createElement(
-      'button',
-      { onClick: minusOne },
-      'Minus one'
+      'ol',
+      null,
+      React.createElement(
+        'li',
+        null,
+        'Item 1'
+      ),
+      React.createElement(
+        'li',
+        null,
+        'Item 2'
+      )
     ),
     React.createElement(
-      'button',
-      { onClick: equalsZero },
-      'Reset'
+      'form',
+      { onSubmit: handleSubmit },
+      React.createElement('input', { type: 'text', name: 'option', autoComplete: 'off' }),
+      React.createElement(
+        'button',
+        null,
+        'Submit'
+      )
     )
   );
 
-  ReactDOM.render(template2, appRoot);
+  ReactDOM.render(template, appRoot);
 };
 
-renderFunc();
+reRendeFunc();
