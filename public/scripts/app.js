@@ -6,7 +6,7 @@ console.log('app.js is running');
 var app = {
   title: 'Indecision  App',
   subtitle: 'I am a sub-title',
-  options: []
+  options: ['Option one', 'Option two']
 };
 
 var handleSubmit = function handleSubmit(e) {
@@ -46,11 +46,6 @@ var reRendeFunc = function reRendeFunc() {
       null,
       app.options.length > 0 ? 'Here are your options' : 'You do not have any options'
     ),
-    app.options.length > 0 && React.createElement(
-      'p',
-      null,
-      app.options.length
-    ),
     React.createElement(
       'button',
       { onClick: clearArray },
@@ -59,16 +54,13 @@ var reRendeFunc = function reRendeFunc() {
     React.createElement(
       'ol',
       null,
-      React.createElement(
-        'li',
-        null,
-        'Item 1'
-      ),
-      React.createElement(
-        'li',
-        null,
-        'Item 2'
-      )
+      app.options.map(function (item, index) {
+        return React.createElement(
+          'li',
+          { key: index },
+          item
+        );
+      })
     ),
     React.createElement(
       'form',

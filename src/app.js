@@ -4,7 +4,7 @@ console.log('app.js is running')
 var app = {
   title: 'Indecision  App',
   subtitle: 'I am a sub-title',
-  options: []
+  options: ['Option one', 'Option two']
 }
 
 const handleSubmit = (e) => {
@@ -33,13 +33,13 @@ const reRendeFunc = () => {
       <h1>{app.title}</h1>
       {app.subtitle && <p>{app.subtitle}</p>}
       <p>{app.options.length > 0 ? 'Here are your options' : 'You do not have any options'}</p>
-      {
-        app.options.length > 0 && <p>{app.options.length}</p>
-      }
       <button onClick={clearArray}>Clear options</button>
       <ol>
-        <li>Item 1</li>
-        <li>Item 2</li>
+          {
+            app.options.map((item, index) => {
+              return <li key={index}>{item}</li>
+            })
+          }
       </ol>
       <form onSubmit={handleSubmit}>
         <input type='text' name='option' autoComplete='off' />
