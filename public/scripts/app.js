@@ -21,10 +21,16 @@ var handleSubmit = function handleSubmit(e) {
   }
 };
 
+var onMakeDecision = function onMakeDecision() {
+  var number = Math.floor(Math.random() * app.options.length);
+  var option = app.options[number];
+  console.log(option);
+};
 var clearArray = function clearArray() {
   app.options = [];
   reRendeFunc();
 };
+
 var appRoot = document.getElementById('app');
 
 var reRendeFunc = function reRendeFunc() {
@@ -46,6 +52,14 @@ var reRendeFunc = function reRendeFunc() {
       null,
       app.options.length > 0 ? 'Here are your options' : 'You do not have any options'
     ),
+    React.createElement(
+      'button',
+      {
+        disabled: app.options.length === 0 ? true : false,
+        onClick: onMakeDecision },
+      'What should I do?'
+    ),
+    React.createElement('br', null),
     React.createElement(
       'button',
       { onClick: clearArray },

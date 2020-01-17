@@ -20,10 +20,17 @@ const handleSubmit = (e) => {
 
 }
 
+const onMakeDecision = () => {
+  const number = Math.floor(Math.random()*app.options.length)
+  const option = app.options[number]
+  console.log(option)
+}
 const clearArray = () => {
   app.options = []
   reRendeFunc()
 }
+
+
 var appRoot = document.getElementById('app')
 
 
@@ -33,6 +40,12 @@ const reRendeFunc = () => {
       <h1>{app.title}</h1>
       {app.subtitle && <p>{app.subtitle}</p>}
       <p>{app.options.length > 0 ? 'Here are your options' : 'You do not have any options'}</p>
+      <button
+        disabled={app.options.length === 0 ? true : false} 
+        onClick={onMakeDecision}>
+        What should I do?
+      </button>
+      <br />
       <button onClick={clearArray}>Clear options</button>
       <ol>
           {
