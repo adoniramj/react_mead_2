@@ -1,35 +1,44 @@
 'use strict';
 
-var visible = true;
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var makeVisible = function makeVisible() {
-  visible = !visible;
-  render();
-};
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var appRoot = document.getElementById('app');
+var Person = function () {
+  //es6 method definition syntax
+  function Person() {
+    var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'Anonymous';
+    var age = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
 
-var render = function render() {
-  var visibility = React.createElement(
-    'div',
-    null,
-    React.createElement(
-      'h1',
-      null,
-      'Visibility app'
-    ),
-    React.createElement(
-      'button',
-      { onClick: makeVisible },
-      visible ? 'Click to Hide' : 'Click to unhide'
-    ),
-    visible ? React.createElement(
-      'p',
-      null,
-      'Click the button to hide me'
-    ) : null
-  );
-  ReactDOM.render(visibility, appRoot);
-};
+    _classCallCheck(this, Person);
 
-render();
+    //this refers to the class instance
+    this.name = name;
+    this.age = age;
+  }
+
+  _createClass(Person, [{
+    key: 'getGreeting',
+    value: function getGreeting() {
+      return 'Hi ' + this.name;
+    }
+  }, {
+    key: 'getDescription',
+    value: function getDescription() {
+      return 'Hi. My name is ' + this.name + ' and my age is ' + this.age + ' years old.';
+    }
+  }]);
+
+  return Person;
+}();
+
+var me = new Person('Adoniram Vargas', 47);
+
+console.log(me);
+
+var other = new Person();
+console.log(other);
+
+console.log(me.getGreeting());
+console.log(other.getGreeting());
+console.log(me.getDescription());
