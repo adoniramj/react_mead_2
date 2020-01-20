@@ -6,9 +6,9 @@ class IndecisionApp extends React.Component {
     const options = ['thing one', 'thing two', 'thing four']
     return (
       <div>
-        <Header title={title} subtitle={subtitle}/>
+        <Header title={title} subtitle={subtitle} />
         <Action />
-        <Options options={options}/>
+        <Options options={options} />
         <AddOption />
       </div>
     )
@@ -28,23 +28,31 @@ class Header extends React.Component {
 }
 
 class Action extends React.Component {
+
+  handlePick() {
+    alert('Handle pick')
+  }
   render() {
     return (
       <div>
-        <button>What should I do?</button>
+        <button onClick={this.handlePick}>What should I do?</button>
       </div>
     )
   }
 }
 
 class Options extends React.Component {
+  handleRemoveAll() {
+    alert('Remove all button clicked')
+  }
   render() {
     console.log(this.props)
     return (
       <div>
-       {
-         this.props.options.map(item => <Option key={item} optionText={item} />)
-       }
+        <button onClick={this.handleRemoveAll}>Remove All</button>
+        {
+          this.props.options.map(item => <Option key={item} optionText={item} />)
+        }
       </div>
     )
   }
@@ -59,10 +67,22 @@ class Option extends React.Component {
 }
 
 class AddOption extends React.Component {
+  handleAddOption(e) {
+    e.preventDefault()
+    let option = e.target.elements.option.value.trim()
+    if(option){
+      alert(option)
+      e.target.elements.option.value = ''
+
+    }
+  }
   render() {
     return (
       <div>
-        AddOption component here
+        <form onSubmit={this.handleAddOption}>
+          <input type='text' name='option' autoComplete='off'></input>
+          <button>Submit</button>
+        </form>
       </div>
     )
   }
