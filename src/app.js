@@ -48,59 +48,49 @@ class IndecisionApp extends React.Component {
   }
 }
 
-class Header extends React.Component {
-  render() {
-    return (
-      <div>
-        <h1>{this.props.title}</h1>
-        <h2>{this.props.subtitle}</h2>
-      </div>
-    )
-  }
+const Header = (props) => {
+  return (
+    <div>
+      <h1>{props.title}</h1>
+      <h2>{props.subtitle}</h2>
+    </div>
+  )
 }
 
-class Action extends React.Component {
-  render() {
-    return (
-      <div>
-        <button
-          disabled={this.props.hasOptions.length === 0}
-          onClick={this.props.handlePick}>
-          What should I do?
-        </button>
-      </div>
-    )
-  }
+const Action = (props) => {
+  return (
+    <div>
+      <button
+        disabled={props.hasOptions.length === 0}
+        onClick={props.handlePick}
+      >
+       What should I do?
+      </button>
+    </div>
+  )
 }
 
-class Options extends React.Component {
-  constructor(props) {
-    super(props)
-  }
- 
-  render() {
-    return (
-      <div>
-        <button
-          disabled={this.props.options.length == 0} 
-          onClick={this.props.deleteAll}>
-          Remove All
-          </button>
-        {
-          this.props.options.map(item => <Option key={item} optionText={item} />)
-        }
-      </div>
-    )
-  }
+const Options = (props) => {
+  return (
+    <div>
+      <button
+        disabled={props.options.length == 0}
+        onClick={props.deleteAll}>
+        Remove All
+      </button>
+      {
+        props.options.map(item => <Option key={item} optionText={item} />)
+      }
+    </div>
+  )
 }
 
-class Option extends React.Component {
-  render() {
-    return (
-      <p>{this.props.optionText}</p>
-    )
-  }
+const Option = (props) => {
+  return (
+    <p>{props.optionText}</p>
+  )
 }
+
 
 class AddOption extends React.Component {
   constructor(props) {
