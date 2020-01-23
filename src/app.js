@@ -9,6 +9,28 @@ class IndecisionApp extends React.Component {
       options: props.options
     }
   }
+
+  componentDidMount() {
+    try {
+      const json = localStorage.getItem('options')
+      const options = JSON.parse(json)
+      if (options) {
+        this.setState(() => ({ options }))
+      }
+
+    } catch (e) {
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.options.length != this.state.options.length) {
+      let json = JSON.stringify(this.state.options)
+      localStorage.setItem('options', json)
+      localStorage.setItem('test', json)
+    }
+
+  }
+
   handleAddOption(addOption) {
     if (!addOption) {
       return 'Please insert a non-empty string.'
@@ -26,7 +48,7 @@ class IndecisionApp extends React.Component {
       return item != option
     })
 
-    this.setState(() =>({options: newArray}))
+    this.setState(() => ({ options: newArray }))
   }
   handlePick() {
     const index = Math.floor(Math.random() * this.state.options.length)
@@ -88,6 +110,7 @@ const Options = (props) => {
         onClick={props.deleteAll}>
         Remove All
       </button>
+      {props.options.length == 0 && <p>There are no options!</p>}
       {
         props.options.map(item => <Option key={item} optionText={item} deleteOption={props.deleteOption} />)
       }
@@ -100,7 +123,7 @@ const Option = (props) => {
     <div>
       {props.optionText}
       <button
-       onClick={() => props.deleteOption(props.optionText)}
+        onClick={() => props.deleteOption(props.optionText)}
       >Remove option
       </button>
     </div>
@@ -121,7 +144,9 @@ class AddOption extends React.Component {
     let option = e.target.elements.option.value.trim()
     const error = this.props.addOption(option)
     this.setState(() => ({ error }))
-    e.target.elements.option.value = ''
+    if(!error){
+      e.target.elements.option.value = ''
+    }
   }
   render() {
     return (
@@ -138,4 +163,4 @@ class AddOption extends React.Component {
   }
 }
 
-ReactDOM.render(<IndecisionApp options={['option 2', 'maybe']} />, document.getElementById('app'))
+ReactDOM.render(<IndecisionApp />, document.getElementById('app'))
