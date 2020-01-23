@@ -1,106 +1,135 @@
 class IndecisionApp extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props)
     this.handleDeleteAll = this.handleDeleteAll.bind(this)
     this.handleAddOption = this.handleAddOption.bind(this)
+    this.handleDeleteOption = this.handleDeleteOption.bind(this)
     this.handlePick = this.handlePick.bind(this)
     this.state = {
-      options: ['thing one', 'thing two', 'thing four']
+      options: props.options
     }
   }
+
+  componentDidMount() {
+    try {
+      const json = localStorage.getItem('options')
+      const options = JSON.parse(json)
+      if (options) {
+        this.setState(() => ({ options }))
+      }
+
+    } catch (e) {
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.options.length != this.state.options.length) {
+      let json = JSON.stringify(this.state.options)
+      localStorage.setItem('options', json)
+      localStorage.setItem('test', json)
+    }
+
+  }
+
   handleAddOption(addOption) {
-    if(!addOption){
+    if (!addOption) {
       return 'Please insert a non-empty string.'
     } else if (this.state.options.indexOf(addOption) > -1) {
       return 'This option is already in the system.'
     }
-    this.setState((prevState)=> {
-      return {
-        options: prevState.options.concat(addOption)
-      }
-    })    
+    this.setState((prevState) => ({ options: prevState.options.concat(addOption) }))
   }
   handleDeleteAll() {
-    this.setState(() => {
-      return {
-        options: []
-      }
-    })
+    this.setState(() => ({ options: [] }))
   }
 
-  handlePick(){
+  handleDeleteOption(option) {
+    let newArray = this.state.options.filter(item => {
+      return item != option
+    })
+
+    this.setState(() => ({ options: newArray }))
+  }
+  handlePick() {
     const index = Math.floor(Math.random() * this.state.options.length)
     console.log(index)
     alert(this.state.options[index])
   }
   render() {
-
-    const title = 'Indecision App'
-    const subtitle = 'Put your life in the hands of a computer!'
+    const subtitle = 'Test the subtitle'
     return (
       <div>
-        <Header title={title} subtitle={subtitle} />
-        <Action hasOptions={this.state.options} handlePick={this.handlePick}/>
-        <Options options={this.state.options}  deleteAll={this.handleDeleteAll}/>
-        <AddOption addOption={this.handleAddOption}/>
+        <Header subtitle={subtitle} />
+        <Action hasOptions={this.state.options} handlePick={this.handlePick} />
+        <Options
+          options={this.state.options}
+          deleteAll={this.handleDeleteAll}
+          deleteOption={this.handleDeleteOption}
+        />
+        <AddOption addOption={this.handleAddOption} />
       </div>
     )
   }
 }
 
-class Header extends React.Component {
-  render() {
-    return (
-      <div>
-        <h1>{this.props.title}</h1>
-        <h2>{this.props.subtitle}</h2>
-      </div>
-    )
-  }
+IndecisionApp.defaultProps = {
+  options: []
 }
 
-class Action extends React.Component {
-  render() {
-    return (
-      <div>
-        <button
-          disabled={this.props.hasOptions.length === 0}
-          onClick={this.props.handlePick}>
-          What should I do?
-        </button>
-      </div>
-    )
-  }
+const Header = (props) => {
+  return (
+    <div>
+      <h1>{props.title}</h1>
+      {props.subtitle && <h2>{props.subtitle}</h2>}
+    </div>
+  )
 }
 
-class Options extends React.Component {
-  constructor(props) {
-    super(props)
-  }
- 
-  render() {
-    return (
-      <div>
-        <button
-          disabled={this.props.options.length == 0} 
-          onClick={this.props.deleteAll}>
-          Remove All
-          </button>
-        {
-          this.props.options.map(item => <Option key={item} optionText={item} />)
-        }
-      </div>
-    )
-  }
+Header.defaultProps = {
+  title: 'default name'
 }
 
-class Option extends React.Component {
-  render() {
-    return (
-      <p>{this.props.optionText}</p>
-    )
-  }
+const Action = (props) => {
+  return (
+    <div>
+      <button
+        disabled={props.hasOptions.length === 0}
+        onClick={props.handlePick}
+      >
+        What should I do?
+      </button>
+    </div>
+  )
 }
+
+const Options = (props) => {
+  return (
+    <div>
+      <button
+        disabled={props.options.length == 0}
+        onClick={props.deleteAll}>
+        Remove All
+      </button>
+      {props.options.length == 0 && <p>There are no options!</p>}
+      {
+        props.options.map(item => <Option key={item} optionText={item} deleteOption={props.deleteOption} />)
+      }
+    </div>
+  )
+}
+
+const Option = (props) => {
+  return (
+    <div>
+      {props.optionText}
+      <button
+        onClick={() => props.deleteOption(props.optionText)}
+      >Remove option
+      </button>
+    </div>
+  )
+}
+
 
 class AddOption extends React.Component {
   constructor(props) {
@@ -114,11 +143,10 @@ class AddOption extends React.Component {
     e.preventDefault()
     let option = e.target.elements.option.value.trim()
     const error = this.props.addOption(option)
-    this.setState(() => {
-      return { error }
-    })
-    e.target.elements.option.value = ''
- 
+    this.setState(() => ({ error }))
+    if(!error){
+      e.target.elements.option.value = ''
+    }
   }
   render() {
     return (
