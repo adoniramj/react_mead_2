@@ -26,7 +26,6 @@ class IndecisionApp extends React.Component {
     if (prevState.options.length != this.state.options.length) {
       let json = JSON.stringify(this.state.options)
       localStorage.setItem('options', json)
-      localStorage.setItem('test', json)
     }
 
   }
