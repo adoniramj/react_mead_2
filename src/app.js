@@ -1,14 +1,15 @@
-//import './utils.js'
+//import validator from 'validator'
+import React from 'react';
+import ReactDOM from 'react-dom'
 
-import { square, cube, add, isAdult } from './utils'
-import { canDrink } from './playground/canDrink'
-console.log('app.js is running')
-console.log(square(4))
-console.log(cube(3))
-console.log(add(100,100))
+import { square } from './utils'
 
-console.log(isAdult(20))
-console.log(isAdult(14))
+const template = (
+  <div>
+    <p>This is a template! {square(2)}</p>
+    <h1>{square(20)}</h1>
 
-console.log(canDrink(22))
-console.log(canDrink(12))
+  </div>
+)
+
+ReactDOM.render(template, document.getElementById('app'))

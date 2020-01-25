@@ -11,6 +11,6 @@ const isAdult = (age) => {
   }
 }
 
-export const add = (a, b) => a + b
+//export const add = (a, b) => a + b
 
 export { square, cube, isAdult }
