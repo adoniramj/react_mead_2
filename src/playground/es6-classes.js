@@ -1,5 +1,5 @@
 class Person {
-  //This not a function body
+  //This is not a function body
   //es6 method definition syntax
   constructor(name = 'Anonymous', age = 0) {
     //this refers to the class instance

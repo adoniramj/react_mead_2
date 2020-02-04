@@ -4,6 +4,7 @@ import Option from './Option'
 const Options = (props) => {
   return (
     <div>
+      
       <button
         disabled={props.options.length == 0}
         onClick={props.deleteAll}>
