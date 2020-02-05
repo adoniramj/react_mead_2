@@ -16,7 +16,10 @@ var onFormSubmit = function onFormSubmit(event) {
   //const optionList = app.options.map(element => <li key={element}>{element}</li>)
   render();
 };
-
+var onMakeDecision = function onMakeDecision() {
+  var number = Math.floor(Math.random() * app.options.length);
+  alert(app.options[number]);
+};
 var removeAll = function removeAll() {
   app.options = [];
   render();
@@ -42,6 +45,12 @@ function render() {
       null,
       app.options.length > 0 ? 'Here are your options' : 'No options'
     ),
+    React.createElement(
+      'button',
+      { onClick: onMakeDecision, disabled: app.options.length === 0 ? true : false },
+      'What should I do?'
+    ),
+    React.createElement('br', null),
     React.createElement(
       'button',
       { onClick: removeAll },
