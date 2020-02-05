@@ -13,6 +13,7 @@ var onFormSubmit = function onFormSubmit(event) {
   var option = event.target.elements.option.value;
   app.options.push(option);
   event.target.elements.option.value = '';
+  //const optionList = app.options.map(element => <li key={element}>{element}</li>)
   render();
 };
 
@@ -47,23 +48,15 @@ function render() {
       'Remove all options'
     ),
     React.createElement(
-      'p',
-      null,
-      app.options.length
-    ),
-    React.createElement(
       'ol',
       null,
-      React.createElement(
-        'li',
-        null,
-        app.options[0]
-      ),
-      React.createElement(
-        'li',
-        null,
-        app.options[1]
-      )
+      app.options.map(function (option) {
+        return React.createElement(
+          'li',
+          { key: option },
+          option
+        );
+      })
     ),
     React.createElement(
       'form',

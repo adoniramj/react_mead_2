@@ -11,6 +11,7 @@ const onFormSubmit = (event) => {
   const option = event.target.elements.option.value
   app.options.push(option)
   event.target.elements.option.value = ''
+  //const optionList = app.options.map(element => <li key={element}>{element}</li>)
   render()
 }
 
@@ -18,6 +19,7 @@ const removeAll = () => {
   app.options = []
   render()
 }
+
 
 const appRoot = document.getElementById('app')
 function render () {
@@ -27,10 +29,10 @@ function render () {
       {app.subtitle && <p>{app.subtitle}</p>}
       <p>{app.options.length > 0 ? 'Here are your options' : 'No options'}</p>
       <button onClick={removeAll}>Remove all options</button>
-      <p>{app.options.length}</p>
       <ol>
-        <li>{app.options[0]}</li>
-        <li>{app.options[1]}</li>
+        {
+          app.options.map(option => <li key={option}>{option}</li>)
+        }
       </ol>
       <form onSubmit={onFormSubmit}>
         <input type='text' name='option' autoComplete='off'/>
