@@ -1,85 +1,36 @@
 'use strict';
 
-console.log('The server is running');
+var message = 'Click the button to hide me!';
 
-var app = {
-  'title': 'Indecision App',
-  'subtitle': 'Put your life in the hands of a computer!',
-  'options': ['option one', 'option two']
-};
+var rootApp = document.getElementById('app');
 
-var onFormSubmit = function onFormSubmit(event) {
-  event.preventDefault();
-  var option = event.target.elements.option.value;
-  app.options.push(option);
-  event.target.elements.option.value = '';
-  //const optionList = app.options.map(element => <li key={element}>{element}</li>)
+var visibilityStatus = true;
+
+var handleVisibility = function handleVisibility() {
+  visibilityStatus = !visibilityStatus;
   render();
 };
-var onMakeDecision = function onMakeDecision() {
-  var number = Math.floor(Math.random() * app.options.length);
-  alert(app.options[number]);
-};
-var removeAll = function removeAll() {
-  app.options = [];
-  render();
-};
-
-var appRoot = document.getElementById('app');
-function render() {
+var render = function render() {
   var template = React.createElement(
     'div',
     null,
     React.createElement(
       'h1',
       null,
-      app.title
-    ),
-    app.subtitle && React.createElement(
-      'p',
-      null,
-      app.subtitle
-    ),
-    React.createElement(
-      'p',
-      null,
-      app.options.length > 0 ? 'Here are your options' : 'No options'
+      'Visibility Toggle'
     ),
     React.createElement(
       'button',
-      { onClick: onMakeDecision, disabled: app.options.length === 0 ? true : false },
-      'What should I do?'
+      { onClick: handleVisibility },
+      visibilityStatus ? 'Click to hide' : 'Click to unhide'
     ),
-    React.createElement('br', null),
-    React.createElement(
-      'button',
-      { onClick: removeAll },
-      'Remove all options'
-    ),
-    React.createElement(
-      'ol',
+    visibilityStatus && React.createElement(
+      'p',
       null,
-      app.options.map(function (option) {
-        return React.createElement(
-          'li',
-          { key: option },
-          option
-        );
-      })
-    ),
-    React.createElement(
-      'form',
-      { onSubmit: onFormSubmit },
-      React.createElement('input', { type: 'text', name: 'option', autoComplete: 'off' }),
-      React.createElement(
-        'button',
-        null,
-        'Submit'
-      )
+      message
     )
   );
-
-  ReactDOM.render(template, appRoot);
-}
+  ReactDOM.render(template, rootApp);
+};
 
 render();
