@@ -1,0 +1,41 @@
+Arguments: 
+  /usr/local/bin/node /usr/local/bin/yarn add babel-preset-react@6.24.1 babel-preset-evn@1.5.2
+
+PATH: 
+  /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
+
+Yarn version: 
+  1.21.1
+
+Node version: 
+  12.13.1
+
+Platform: 
+  linux x64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/babel-preset-evn: Not found
+      at Request.params.callback [as _callback] (/usr/local/lib/node_modules/yarn/lib/cli.js:66947:18)
+      at Request.self.callback (/usr/local/lib/node_modules/yarn/lib/cli.js:140665:22)
+      at Request.emit (events.js:210:5)
+      at Request.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141637:10)
+      at Request.emit (events.js:210:5)
+      at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141559:12)
+      at Object.onceWrapper (events.js:299:28)
+      at IncomingMessage.emit (events.js:215:7)
+      at endReadableNT (_stream_readable.js:1184:12)
+      at processTicksAndRejections (internal/process/task_queues.js:80:21)
+
+npm manifest: 
+  {
+    "name": "indecision_app",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT"
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
