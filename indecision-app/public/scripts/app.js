@@ -19,88 +19,72 @@ function getLocation(location) {
     return '';
   }
 }
-var template = React.createElement(
-  'div',
-  null,
-  app.title ? React.createElement(
-    'h1',
-    null,
-    app.title
-  ) : React.createElement(
-    'h1',
-    null,
-    'Anonymous'
-  ),
-  app.subtitle && React.createElement(
-    'p',
-    null,
-    app.subtitle
-  ),
-  app.options.length > 0 ? 'Here are your options' : 'There a no options',
-  React.createElement(
-    'ol',
-    null,
-    React.createElement(
-      'li',
-      null,
-      'Item 1'
-    ),
-    React.createElement(
-      'li',
-      null,
-      'Item 2'
-    )
-  )
-);
 
-var count = 0;
-
-var addOne = function addOne() {
-  console.log('add one', count);
-  count++;
-  render();
-};
-var minusOne = function minusOne() {
-  console.log('minus one');
-  count--;
-  render();
-};
-var reset = function reset() {
-  console.log('reset');
-  count = 0;
-  render();
+var handleSubmit = function handleSubmit(event) {
+  event.preventDefault();
+  var option = event.target.elements.option.value;
+  if (option) {
+    app.options.push(option);
+    render();
+    event.target.elements.option.value = '';
+  }
 };
 
+var handleReset = function handleReset() {
+  app.options = [];
+  render();
+};
 var appRoot = document.getElementById("app");
-
-function render() {
-  var templateTwo = React.createElement(
+var render = function render() {
+  var template = React.createElement(
     'div',
     null,
-    React.createElement(
+    app.title ? React.createElement(
       'h1',
       null,
-      'Count: ',
-      count
+      app.title
+    ) : React.createElement(
+      'h1',
+      null,
+      'Anonymous'
     ),
+    app.subtitle && React.createElement(
+      'p',
+      null,
+      app.subtitle
+    ),
+    app.options.length > 0 ? 'Here are your options' : 'There a no options',
     React.createElement(
       'button',
-      { onClick: addOne },
-      '+1'
+      { onClick: handleReset },
+      'Clear all options'
     ),
     React.createElement(
-      'button',
-      { onClick: minusOne },
-      '-1'
+      'ol',
+      null,
+      React.createElement(
+        'li',
+        null,
+        'Item 1'
+      ),
+      React.createElement(
+        'li',
+        null,
+        'Item 2'
+      )
     ),
     React.createElement(
-      'button',
-      { onClick: reset },
-      'Reset'
+      'form',
+      { onSubmit: handleSubmit },
+      React.createElement('input', { type: 'text', name: 'option', autoComplete: 'off' }),
+      React.createElement(
+        'button',
+        { type: 'submit' },
+        'Add option'
+      )
     )
   );
-
-  ReactDOM.render(templateTwo, appRoot);
-}
+  ReactDOM.render(template, appRoot);
+};
 
 render();
