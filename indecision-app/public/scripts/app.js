@@ -34,9 +34,13 @@ var handleReset = function handleReset() {
   app.options = [];
   render();
 };
+
+var pickOption = function pickOption() {
+  var opt = Math.floor(Math.random() * app.options.length);
+  alert(app.options[opt]);
+};
 var appRoot = document.getElementById("app");
 
-var numbers = [10, 20, 30];
 var render = function render() {
   var template = React.createElement(
     'div',
@@ -63,6 +67,11 @@ var render = function render() {
       'p',
       null,
       'There are no options!'
+    ),
+    React.createElement(
+      'button',
+      { disabled: app.options.length === 0, onClick: pickOption },
+      'Pick on option'
     ),
     React.createElement(
       'button',
