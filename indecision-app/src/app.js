@@ -41,7 +41,7 @@ const render = () => {
       {app.title ? <h1>{app.title}</h1> : <h1>Anonymous</h1>}
       {app.subtitle && <p>{app.subtitle}</p>}
       {app.options.length > 0 ? <p>Here are your options</p> : <p>There are no options!</p>}
-      <button disabled={app.options.length === 0} onClick={pickOption}>Pick on option</button>
+      <button disabled={app.options.length === 0} onClick={pickOption}>Pick an option</button>
       <button onClick={handleReset}>Clear all options</button>
       <ol>
         {

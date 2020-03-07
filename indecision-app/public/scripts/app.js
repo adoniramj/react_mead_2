@@ -1,106 +1,35 @@
 'use strict';
 
-console.log("App.js is running!");
-var app = {
-  title: 'Indecision App',
-  subtitle: 'Put your life in the hands of a computer.',
-  options: ['one', 'two', 'three']
-};
+var visible = true;
 
-function getLocation(location) {
-  if (location) {
-    return React.createElement(
-      'p',
-      null,
-      'Location: ',
-      location
-    );
-  } else {
-    return '';
-  }
-}
-
-var handleSubmit = function handleSubmit(event) {
-  event.preventDefault();
-  var option = event.target.elements.option.value;
-  if (option) {
-    app.options.push(option);
-    render();
-  }
-  event.target.elements.option.value = '';
-};
-
-var handleReset = function handleReset() {
-  app.options = [];
+var handleVisibility = function handleVisibility() {
+  visible = !visible;
   render();
 };
-
-var pickOption = function pickOption() {
-  var opt = Math.floor(Math.random() * app.options.length);
-  alert(app.options[opt]);
-};
-var appRoot = document.getElementById("app");
 
 var render = function render() {
   var template = React.createElement(
     'div',
     null,
-    app.title ? React.createElement(
+    React.createElement(
       'h1',
       null,
-      app.title
-    ) : React.createElement(
-      'h1',
-      null,
-      'Anonymous'
-    ),
-    app.subtitle && React.createElement(
-      'p',
-      null,
-      app.subtitle
-    ),
-    app.options.length > 0 ? React.createElement(
-      'p',
-      null,
-      'Here are your options'
-    ) : React.createElement(
-      'p',
-      null,
-      'There are no options!'
+      'Visibility Toggle'
     ),
     React.createElement(
       'button',
-      { disabled: app.options.length === 0, onClick: pickOption },
-      'Pick on option'
+      { onClick: handleVisibility },
+      visible ? 'Click to hide' : 'Click to unhide'
     ),
-    React.createElement(
-      'button',
-      { onClick: handleReset },
-      'Clear all options'
-    ),
-    React.createElement(
-      'ol',
+    visible ? React.createElement(
+      'p',
       null,
-      app.options.map(function (option) {
-        return React.createElement(
-          'li',
-          { key: option },
-          option
-        );
-      })
-    ),
-    React.createElement(
-      'form',
-      { onSubmit: handleSubmit },
-      React.createElement('input', { type: 'text', name: 'option', autoComplete: 'off' }),
-      React.createElement(
-        'button',
-        { type: 'submit' },
-        'Add option'
-      )
-    )
+      'Click the button to hide me'
+    ) : ''
   );
   ReactDOM.render(template, appRoot);
 };
+
+var appRoot = document.getElementById('app');
 
 render();
