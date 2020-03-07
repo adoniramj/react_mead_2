@@ -4,7 +4,7 @@ console.log("App.js is running!");
 var app = {
   title: 'Indecision App',
   subtitle: 'Put your life in the hands of a computer.',
-  options: ['one', 'two']
+  options: ['one', 'two', 'three']
 };
 
 function getLocation(location) {
@@ -26,8 +26,8 @@ var handleSubmit = function handleSubmit(event) {
   if (option) {
     app.options.push(option);
     render();
-    event.target.elements.option.value = '';
   }
+  event.target.elements.option.value = '';
 };
 
 var handleReset = function handleReset() {
@@ -35,6 +35,8 @@ var handleReset = function handleReset() {
   render();
 };
 var appRoot = document.getElementById("app");
+
+var numbers = [10, 20, 30];
 var render = function render() {
   var template = React.createElement(
     'div',
@@ -53,7 +55,15 @@ var render = function render() {
       null,
       app.subtitle
     ),
-    app.options.length > 0 ? 'Here are your options' : 'There a no options',
+    app.options.length > 0 ? React.createElement(
+      'p',
+      null,
+      'Here are your options'
+    ) : React.createElement(
+      'p',
+      null,
+      'There are no options!'
+    ),
     React.createElement(
       'button',
       { onClick: handleReset },
@@ -62,16 +72,13 @@ var render = function render() {
     React.createElement(
       'ol',
       null,
-      React.createElement(
-        'li',
-        null,
-        'Item 1'
-      ),
-      React.createElement(
-        'li',
-        null,
-        'Item 2'
-      )
+      app.options.map(function (option) {
+        return React.createElement(
+          'li',
+          { key: option },
+          option
+        );
+      })
     ),
     React.createElement(
       'form',
