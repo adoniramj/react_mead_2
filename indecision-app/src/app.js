@@ -1,61 +1,48 @@
-console.log("App.js is running!")
-var app = {
-  title: 'Indecision App',
-  subtitle: 'Put your life in the hands of a computer.',
-  options: ['one', 'two', 'three']
-}
-
-function getLocation(location) {
-  if (location) {
-    return <p>Location: {location}</p>
-  } else {
-    return ''
+class Header extends React.Component {
+  render () {
+    return (
+      <div>
+        <h1>Indecision App</h1>
+        <h2>Put your life in the hands of a computer!</h2>
+        <Action />
+        <Options />
+        <AddOption />
+      </div>
+    )
   }
 }
 
-const handleSubmit = (event) => {
-  event.preventDefault();
-  const option = event.target.elements.option.value
-  if (option) {
-    app.options.push(option)
-    render()
+class Action extends React.Component {
+  render () {
+    return ( 
+      <div>
+        <button>What should I do?</button>
+      </div>
+    )
   }
-  event.target.elements.option.value = ''
 }
 
-const handleReset = () => {
-  app.options = []
-  render()
+class Options extends React.Component {
+  render() {
+    return (
+      <div>
+        <p>This is options component</p>
+      </div>
+    )
+  }
 }
 
-const pickOption = () => {
-  let opt = Math.floor(Math.random() * app.options.length)
-  alert(app.options[opt])
-
+class AddOption extends React.Component {
+  render () {
+    return (
+      <div>
+        <form>
+          <input type='text' name='option'></input>
+          <button type='submit'>Add an option</button>
+        </form>
+      </div>
+    )
+  }
 }
-var appRoot = document.getElementById("app")
-
-const render = () => {
-  var template = (
-    <div>
-      {app.title ? <h1>{app.title}</h1> : <h1>Anonymous</h1>}
-      {app.subtitle && <p>{app.subtitle}</p>}
-      {app.options.length > 0 ? <p>Here are your options</p> : <p>There are no options!</p>}
-      <button disabled={app.options.length === 0} onClick={pickOption}>Pick an option</button>
-      <button onClick={handleReset}>Clear all options</button>
-      <ol>
-        {
-          app.options.map(option => <li key={option}>{option}</li>)
-        }
-      </ol>
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="option" autoComplete="off"></input>
-        <button type="submit">Add option</button>
-      </form>
-    </div>)
-  ReactDOM.render(template, appRoot)
-}
-
-
-render()
-
+const appRoot = document.getElementById('app')
+ReactDOM.render(<Header />, appRoot)
