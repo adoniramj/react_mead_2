@@ -82,6 +82,11 @@ var Action = function (_React$Component3) {
   }
 
   _createClass(Action, [{
+    key: 'handlePick',
+    value: function handlePick() {
+      alert('Action');
+    }
+  }, {
     key: 'render',
     value: function render() {
       return React.createElement(
@@ -89,7 +94,7 @@ var Action = function (_React$Component3) {
         null,
         React.createElement(
           'button',
-          null,
+          { onClick: this.handlePick },
           'What should I do?'
         )
       );
@@ -109,15 +114,20 @@ var Options = function (_React$Component4) {
   }
 
   _createClass(Options, [{
+    key: 'handleRemoveAll',
+    value: function handleRemoveAll() {
+      alert('Remove all');
+    }
+  }, {
     key: 'render',
     value: function render() {
       return React.createElement(
         'div',
         null,
         React.createElement(
-          'p',
-          null,
-          'This is options component'
+          'button',
+          { onClick: this.handleRemoveAll },
+          'Remove all options'
         ),
         this.props.options.map(function (option) {
           return React.createElement(Option, { key: option, optionText: option });
@@ -162,6 +172,16 @@ var AddOption = function (_React$Component6) {
   }
 
   _createClass(AddOption, [{
+    key: 'handleAddOption',
+    value: function handleAddOption(event) {
+      event.preventDefault();
+      var option = event.target.elements.option.value.trim();
+      if (option) {
+        alert(option);
+      }
+      event.target.elements.option.value = '';
+    }
+  }, {
     key: 'render',
     value: function render() {
       return React.createElement(
@@ -169,8 +189,8 @@ var AddOption = function (_React$Component6) {
         null,
         React.createElement(
           'form',
-          null,
-          React.createElement('input', { type: 'text', name: 'option' }),
+          { onSubmit: this.handleAddOption },
+          React.createElement('input', { type: 'text', name: 'option', autoComplete: 'off' }),
           React.createElement(
             'button',
             { type: 'submit' },
