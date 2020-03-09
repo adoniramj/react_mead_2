@@ -35,9 +35,9 @@ class Counter extends React.Component {
     })
   }
 
-  printCount() {
-    console.log(this.state.count)
-  }
+  // printCount() {
+  //   console.log(this.state.count)
+  // }
   render () {
     
     return (
