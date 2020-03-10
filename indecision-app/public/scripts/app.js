@@ -8,58 +8,99 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Visibility = function (_React$Component) {
-  _inherits(Visibility, _React$Component);
+var Counter = function (_React$Component) {
+  _inherits(Counter, _React$Component);
 
-  function Visibility(props) {
-    _classCallCheck(this, Visibility);
+  function Counter(props) {
+    _classCallCheck(this, Counter);
 
-    var _this = _possibleConstructorReturn(this, (Visibility.__proto__ || Object.getPrototypeOf(Visibility)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Counter.__proto__ || Object.getPrototypeOf(Counter)).call(this, props));
 
-    _this.handleVisibility = _this.handleVisibility.bind(_this);
+    _this.handleAddOne = _this.handleAddOne.bind(_this);
+    _this.handleMinusOne = _this.handleMinusOne.bind(_this);
+    _this.handleReset = _this.handleReset.bind(_this);
     _this.state = {
-      visibility: true
+      title: 'Counter Application',
+      count: props.count
     };
     return _this;
   }
 
-  _createClass(Visibility, [{
-    key: 'handleVisibility',
-    value: function handleVisibility() {
+  _createClass(Counter, [{
+    key: 'handleAddOne',
+    value: function handleAddOne() {
+      this.setState(function (prevState) {
+        //the arrow function is called an updater function
+        return { //prevState is the state object before being updated
+          count: prevState.count + 1
+        };
+      });
+    }
+  }, {
+    key: 'handleMinusOne',
+    value: function handleMinusOne() {
       this.setState(function (prevState) {
         return {
-          visibility: !prevState.visibility
+          count: prevState.count - 1
+        };
+      });
+    }
+  }, {
+    key: 'handleReset',
+    value: function handleReset() {
+      this.setState(function () {
+        return {
+          count: 0
         };
       });
     }
   }, {
     key: 'render',
     value: function render() {
+
       return React.createElement(
         'div',
         null,
         React.createElement(
           'h1',
           null,
-          'Visibility App'
+          this.state.title
+        ),
+        React.createElement(
+          'h2',
+          null,
+          'Count: ',
+          this.state.count
         ),
         React.createElement(
           'button',
-          { onClick: this.handleVisibility },
-          this.state.visibility ? 'Click to hide' : 'Click to unhide'
+          { onClick: this.handleAddOne },
+          'Add one'
         ),
-        this.state.visibility && React.createElement(
-          'p',
-          null,
-          'Click the button to hide me!'
+        React.createElement(
+          'button',
+          { onClick: this.handleMinusOne },
+          'Minus one'
+        ),
+        React.createElement(
+          'button',
+          { onClick: this.handleReset },
+          'Reset counter'
+        ),
+        React.createElement(
+          'button',
+          { onClick: this.printCount },
+          'Count'
         )
       );
     }
   }]);
 
-  return Visibility;
+  return Counter;
 }(React.Component);
 
-var rootApp = document.getElementById('app');
-
-ReactDOM.render(React.createElement(Visibility, null), rootApp);
+Counter.defaultProps = {
+  count: 10
+};
+var appRoot = document.getElementById('app');
+ReactDOM.render(React.createElement(Counter, { count: 40 }), appRoot);

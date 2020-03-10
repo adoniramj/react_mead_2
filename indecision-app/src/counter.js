@@ -6,7 +6,7 @@ class Counter extends React.Component {
     this.handleReset = this.handleReset.bind(this)
     this.state = {
       title: 'Counter Application',
-      count: 0
+      count: props.count
     }
   }
 
@@ -35,9 +35,6 @@ class Counter extends React.Component {
     })
   }
 
-  // printCount() {
-  //   console.log(this.state.count)
-  // }
   render () {
     
     return (
@@ -53,5 +50,8 @@ class Counter extends React.Component {
   }
 }
 
+Counter.defaultProps = {
+  count: 10
+}
 const appRoot = document.getElementById('app')
-ReactDOM.render(<Counter />, appRoot)
+ReactDOM.render(<Counter count={40}/>, appRoot)
