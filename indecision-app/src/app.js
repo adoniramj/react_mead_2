@@ -3,11 +3,29 @@ class IndecisionApp extends React.Component {
   constructor(props) {
     super(props)
     this.handleDeleteAllOptions = this.handleDeleteAllOptions.bind(this)
-    this.addOption = this.addOption.bind(this)
+    this.handleAddOption = this.handleAddOption.bind(this)
     this.handleDeleteOption = this.handleDeleteOption.bind(this)
     this.state = {
       subtitle: 'Put your life in the hands of a computer!',
       options: props.options
+    }
+  }
+  componentDidMount() {
+    try {
+      const json = localStorage.getItem('options')
+      const options = JSON.parse(json)
+      console.log(options)
+      if(options) {
+        this.setState(() => ({ options }))
+      }
+    } catch (error) {
+      //do not update state if json is not valid.
+    }
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.options.length !== this.state.options.length) {
+      const json = JSON.stringify(this.state.options)
+      localStorage.setItem('options', json)
     }
   }
 
@@ -26,7 +44,7 @@ class IndecisionApp extends React.Component {
     })
   }
 
-  addOption(newOption) {
+  handleAddOption(newOption) {
     if (!newOption) {
       return 'Empty strings are not allowed!'
     } else if (this.state.options.indexOf(newOption) > -1) {
@@ -46,14 +64,14 @@ class IndecisionApp extends React.Component {
           handleDeleteAllOptions={this.handleDeleteAllOptions}
           handleDeleteOption={this.handleDeleteOption}
         />
-        <AddOption addOption={this.addOption} />
+        <AddOption handleAddOption={this.handleAddOption} />
       </div>
     )
   }
 }
 
 IndecisionApp.defaultProps = {
-  options: ['Option one']
+  options: ['test']
 }
 const Header = (props) => {
   return (
@@ -88,7 +106,7 @@ const Action = (props) => {
 }
 
 const Options = (props) => {
-  console.log('The Options component has the following', props)
+  //console.log('The Options component has the following', props)
   return (
     <div>
       <button
@@ -99,18 +117,19 @@ const Options = (props) => {
       </button>
       {
         props.options.map(option => {
-        return <Option
-                  key={option}
-                  optionText={option}
-                  handleDeleteOption={props.handleDeleteOption}
-              />})
+          return <Option
+            key={option}
+            optionText={option}
+            handleDeleteOption={props.handleDeleteOption}
+          />
+        })
       }
     </div>
   )
 }
 
 const Option = (props) => {
-  console.log('The Option component has the following', props)
+  //console.log('The Option component has the following', props)
   return (
     <div>
       <span>{props.optionText}</span>
@@ -131,10 +150,11 @@ class AddOption extends React.Component {
   handleAddOption(event) {
     event.preventDefault()
     let option = event.target.elements.option.value.trim()
-    let error = this.props.addOption(option)
+    let error = this.props.handleAddOption(option)
     this.setState(() => ({ error }))
-
-    event.target.elements.option.value = ''
+    if(!error){
+      event.target.elements.option.value = ''
+    }
   }
   render() {
     return (
@@ -150,3 +170,4 @@ class AddOption extends React.Component {
 }
 const appRoot = document.getElementById('app')
 ReactDOM.render(<IndecisionApp options={['ten', 'twenty']} />, appRoot)
+//ReactDOM.render(<IndecisionApp />, appRoot)

@@ -1,5 +1,5 @@
 class Counter extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props)
     this.handleAddOne = this.handleAddOne.bind(this)
     this.handleMinusOne = this.handleMinusOne.bind(this)
@@ -7,6 +7,26 @@ class Counter extends React.Component {
     this.state = {
       title: 'Counter Application',
       count: props.count
+    }
+  }
+
+  componentDidMount() {
+    try {
+      const json = localStorage.getItem('count')
+      const count = JSON.parse(json)
+      if (count) {
+        this.setState(() => ({ count }))
+      }
+    } catch (error) {
+
+    }
+
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.count !== this.state.count) {
+      const json = JSON.stringify(this.state.count)
+      console.log(json)
+      localStorage.setItem('count', json)
     }
   }
 
@@ -35,8 +55,8 @@ class Counter extends React.Component {
     })
   }
 
-  render () {
-    
+  render() {
+
     return (
       <div>
         <h1>{this.state.title}</h1>
@@ -51,7 +71,7 @@ class Counter extends React.Component {
 }
 
 Counter.defaultProps = {
-  count: 10
+  count: 0
 }
 const appRoot = document.getElementById('app')
-ReactDOM.render(<Counter count={40}/>, appRoot)
+ReactDOM.render(<Counter />, appRoot)
